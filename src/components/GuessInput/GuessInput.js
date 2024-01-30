@@ -1,14 +1,20 @@
 import React from 'react';
 
-function GuessInput({ guesses, setGuesses }) {
+function GuessInput({
+  guesses,
+  setGuesses,
+  gameStatus,
+  setGameStatus,
+  handleSubmitGuess,
+}) {
   const [guess, setGuess] = React.useState('');
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    console.log({ guess });
-
-    setGuesses([...guesses, guess]);
+    const nextGuesses = [...guesses, guess];
+    setGuesses(nextGuesses);
+    handleSubmitGuess(guess);
 
     setGuess('');
   }
@@ -18,6 +24,7 @@ function GuessInput({ guesses, setGuesses }) {
       <label htmlFor="guess-input">Enter guess:</label>
       <input
         autoComplete="off"
+        disabled={gameStatus !== 'running'}
         id="guess-input"
         maxLength={5}
         minLength={5}
